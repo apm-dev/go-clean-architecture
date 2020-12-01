@@ -3,8 +3,8 @@ package errors
 import (
 	"errors"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/codes"
-	"reflect"
 	"testing"
 )
 
@@ -49,11 +49,7 @@ func TestE(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := E(tt.args.args...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("E() = %v, want %v", got, tt.want)
-			}
-		})
+		assert.Equal(t, tt.want, E(tt.args.args...), tt.name)
 	}
 }
 
@@ -88,16 +84,12 @@ func TestError_Error(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			e := &Error{
-				Op:   tt.fields.Op,
-				Kind: tt.fields.Kind,
-				Err:  tt.fields.Err,
-			}
-			if got := e.Error(); got != tt.want {
-				t.Errorf("Error() = %v, want %v", got, tt.want)
-			}
-		})
+		e := &Error{
+			Op:   tt.fields.Op,
+			Kind: tt.fields.Kind,
+			Err:  tt.fields.Err,
+		}
+		assert.Equal(t, tt.want, e.Error(), tt.name)
 	}
 }
 
@@ -122,10 +114,6 @@ func TestOps(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Ops(tt.args.e); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Ops() = %v, want %v", got, tt.want)
-			}
-		})
+		assert.Equal(t, tt.want, Ops(tt.args.e), tt.name)
 	}
 }
