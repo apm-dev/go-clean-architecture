@@ -7,10 +7,11 @@ import (
 
 //	Error kinds based on grpc codes
 const (
-	KindNotFound     = codes.NotFound
-	KindUnauthorized = codes.Unauthenticated
-	KindInternal     = codes.Internal
-	KindUnexpected   = codes.Unknown
+	KindNotFound        = codes.NotFound
+	KindInvalidArgument = codes.InvalidArgument
+	KindUnauthorized    = codes.Unauthenticated
+	KindInternal        = codes.Internal
+	KindUnexpected      = codes.Unknown
 )
 
 type Op string
