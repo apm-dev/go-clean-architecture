@@ -2,6 +2,7 @@ package errors
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc/codes"
 )
 
@@ -17,9 +18,10 @@ const (
 type Op string
 
 type Error struct {
-	Op   Op
-	Kind codes.Code
-	Err  error
+	Op       Op
+	Kind     codes.Code
+	Err      error
+	Severity logrus.Level
 }
 
 func E(args ...interface{}) *Error {
@@ -32,6 +34,8 @@ func E(args ...interface{}) *Error {
 			e.Err = arg
 		case codes.Code:
 			e.Kind = arg
+		case logrus.Level:
+			e.Severity = arg
 		default:
 			panic(fmt.Sprintf("bad call to E: %v", arg))
 		}
@@ -60,9 +64,20 @@ func Kind(err error) codes.Code {
 	return Kind(e.Err)
 }
 
+func Level(err error) logrus.Level {
+	e, ok := err.(*Error)
+	if !ok {
+		return logrus.ErrorLevel
+	}
+	if e.Severity != 0 {
+		return e.Severity
+	}
+	return Level(e.Err)
+}
+
 func (e *Error) Error() string {
 	if subErr, ok := e.Err.(*Error); ok {
-		return fmt.Sprintf("K:%d  Op:%s  Err:\n\t%s", e.Kind, e.Op, subErr.Error())
+		return subErr.Error()
 	}
-	return fmt.Sprintf("K:%d  Op:%s  Err:%s", e.Kind, e.Op, e.Err)
+	return e.Err.Error()
 }

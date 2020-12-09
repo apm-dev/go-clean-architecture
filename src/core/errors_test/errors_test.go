@@ -2,7 +2,6 @@ package errors_test
 
 import (
 	"errors"
-	"fmt"
 	err "github.com/apm-dev/go-clean-architecture/core/errors"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/codes"
@@ -72,7 +71,7 @@ func TestError_Error(t *testing.T) {
 				Kind: err.KindNotFound,
 				Err:  errors.New("blog not found"),
 			},
-			fmt.Sprintf("K:5  Op:blog.findByID  Err:blog not found"),
+			"blog not found",
 		},
 		{
 			"Error with nested Error",
@@ -81,7 +80,7 @@ func TestError_Error(t *testing.T) {
 				Kind: err.KindNotFound,
 				Err:  err.E(err.Op("account.getUser"), errors.New("unexpected error")),
 			},
-			"K:5  Op:blog.findByID  Err:\n\tK:0  Op:account.getUser  Err:unexpected error",
+			"unexpected error",
 		},
 	}
 	for _, tt := range tests {
