@@ -25,11 +25,11 @@ func (*inputConverter) StringToUnsignedInt(i string) (int, *errs.Error) {
 	const op errs.Op = "inputConverter.stringToUnsignedInt"
 	number, err := strconv.Atoi(i)
 	if err != nil {
-		return 0, errs.E(op, errs.KindUnexpected, err)
+		return 0, errs.E(op, errs.KindUnexpected, err, errs.LevelInfo)
 	}
 	if number < 0 {
 		return 0, errs.E(
-			op, errs.KindUnexpected,
+			op, errs.KindUnexpected, errs.LevelInfo,
 			errors.New(fmt.Sprintf("negative number: %d", number)),
 		)
 	}

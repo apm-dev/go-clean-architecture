@@ -10,9 +10,16 @@ import (
 const (
 	KindNotFound        = codes.NotFound
 	KindInvalidArgument = codes.InvalidArgument
-	KindUnauthorized    = codes.Unauthenticated
+	KindUnauthenticated = codes.Unauthenticated
+	KindUnauthorized    = codes.PermissionDenied
 	KindInternal        = codes.Internal
 	KindUnexpected      = codes.Unknown
+
+	LevelInfo  = logrus.InfoLevel
+	LevelDebug = logrus.DebugLevel
+	LevelWarn  = logrus.WarnLevel
+	LevelError = logrus.ErrorLevel
+	LevelPanic = logrus.PanicLevel
 )
 
 type Op string
