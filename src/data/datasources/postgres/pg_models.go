@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"github.com/apm-dev/go-clean-architecture/core/errors"
+	errs "github.com/apm-dev/go-clean-architecture/core/errors"
 	"github.com/apm-dev/go-clean-architecture/core/util"
 	"github.com/apm-dev/go-clean-architecture/data/models"
 	"time"
@@ -24,24 +24,25 @@ type PgBlogModel struct {
 }
 
 func (pm *PgBlogModel) ToBlogModel() *models.BlogModel {
+	//	TODO: implement ToBlogModel
 	return nil
 }
 
-func (pm *PgBlogModel) NewFromBlogModel(b models.BlogModel) *errors.Error {
-	const op errors.Op = "pg_models.newFromBlogModel"
+func (pm *PgBlogModel) NewFromBlogModel(b models.BlogModel) *errs.Error {
+	const op errs.Op = "pg_models.newFromBlogModel"
 	id, err := util.InputConverter.StringToUnsignedInt(b.ID)
 	if err != nil {
-		return errors.E(op, err)
+		return errs.E(op, err)
 	}
 	authorId, err := util.InputConverter.StringToUnsignedInt(b.AuthorID)
 	if err != nil {
-		return errors.E(op, err)
+		return errs.E(op, err)
 	}
 	pm.ID = int64(id)
 	pm.Title = b.Title
 	pm.Content = b.Content
 	pm.AuthorID = int64(authorId)
-	pm.CreatedAt = time.Unix(b.CreatedAt, 0)
-	pm.UpdatedAt = time.Unix(b.UpdateAt, 0)
+	pm.CreatedAt = util.Time.FromUnix(b.CreatedAt)
+	pm.UpdatedAt = util.Time.FromUnix(b.UpdatedAt)
 	return nil
 }

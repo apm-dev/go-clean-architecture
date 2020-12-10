@@ -2,6 +2,7 @@ package postgres_test
 
 import (
 	"context"
+	"github.com/apm-dev/go-clean-architecture/core/util"
 	"github.com/apm-dev/go-clean-architecture/data/datasources/postgres"
 	"github.com/apm-dev/go-clean-architecture/data/models"
 	"github.com/go-pg/pg/v10"
@@ -11,7 +12,6 @@ import (
 	"log"
 	"strconv"
 	"testing"
-	"time"
 )
 
 type PgTestSuite struct {
@@ -103,8 +103,8 @@ func (s *PgTestSuite) TestCreateBlog() {
 		Title:     "my title",
 		Content:   "<html>my html content</html>",
 		AuthorID:  "12",
-		CreatedAt: time.Now().UTC().Unix(),
-		UpdateAt:  time.Now().UTC().Unix(),
+		CreatedAt: util.Time.NowUnix(),
+		UpdatedAt: util.Time.NowUnix(),
 	}
 	id, err := pgds.InsertBlog(&blog)
 	if err != nil {

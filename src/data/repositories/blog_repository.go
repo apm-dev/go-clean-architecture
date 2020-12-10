@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"github.com/apm-dev/go-clean-architecture/core/errors"
+	"github.com/apm-dev/go-clean-architecture/core/util"
 	"github.com/apm-dev/go-clean-architecture/data/datasources/postgres"
 	"github.com/apm-dev/go-clean-architecture/data/models"
 	"github.com/apm-dev/go-clean-architecture/domain/entities"
@@ -23,8 +24,8 @@ func (b *blogRepository) Create(blog entities.Blog) (*entities.Blog, *errors.Err
 		Title:     blog.Title,
 		Content:   blog.Content,
 		AuthorID:  blog.AuthorID,
-		CreatedAt: blog.CreatedAt,
-		UpdateAt:  blog.UpdatedAt,
+		CreatedAt: util.Time.NowUnix(),
+		UpdatedAt: util.Time.NowUnix(),
 	})
 	if err != nil {
 		return nil, errors.E(op, err)
