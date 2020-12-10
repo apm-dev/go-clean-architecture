@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package blog;
+option go_package = "pbs";
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+service BlogService {
+  rpc Create(CreateBlogRequest) returns (CreateBlogResponse){};
+}
+
+message Blog {
+  string id = 1;
+  string author_id = 2;
+  string title = 3;
+  string content = 4;
+  int64 created_at = 5;
+  int64 updated_at = 6;
+}
+
+message CreateBlogRequest {
+  string title = 1 [(validator.field) = {length_gt: 3, length_lt: 128}];
+  string content = 2 [(validator.field) = {length_gt: 5}];
+}
+
+message CreateBlogResponse {
+  Blog blog = 1;
+}
