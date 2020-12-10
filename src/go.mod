@@ -8,6 +8,7 @@ require (
 	github.com/containerd/continuity v0.0.0-20201202124332-91328d7c60e7 // indirect
 	github.com/go-pg/pg/v10 v10.7.3
 	github.com/golang/protobuf v1.4.3
+	github.com/google/wire v0.4.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.2
 	github.com/joho/godotenv v1.3.0
 	github.com/moby/term v0.0.0-20201110203204-bea5bbe245bf // indirect
