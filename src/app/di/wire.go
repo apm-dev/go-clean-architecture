@@ -14,6 +14,7 @@ import (
 
 var (
 	//	Third-Party
+
 	postgresDB = wire.NewSet(providePostgresDB)
 
 	//	DataSources
